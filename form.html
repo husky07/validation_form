@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration Form</title>
+</head>
+<body>
+    <h1>User Registration</h1>
+    <form id="registrationForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br><br>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" required><br><br>
+
+        <button type="submit" style="color: blue;">Register</button>
+    </form>
+
+    <div id="errorMessage" style="color: red;"></div>
+
+    <script>
+        const registrationForm = document.getElementById("registrationForm");
+        const errorMessage = document.getElementById("errorMessage");
+
+        registrationForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (!name || !email || !password || !confirmPassword) {
+                errorMessage.textContent = "All fields are required";
+            } else if (!isValidEmail(email)) {
+                errorMessage.textContent = "Please enter a valid email address";
+            } else if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match";
+            } else if (!isValidPassword(password)) {
+                errorMessage.textContent = "Password must be at least 8 characters long and contain both letters and numbers";
+            } else {
+                errorMessage.textContent = ""; // Clear any previous error message
+                // Submit the form or perform further actions
+                alert("Registration successful!");
+            }
+        });
+
+        const isValidEmail = (email) => {
+            // A simple email validation regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        };
+
+        const isValidPassword = (password) => {
+            // Password should be at least 8 characters long and contain at least one letter and one number
+            const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            return passwordRegex.test(password);
+        };
+    </script>
+</body>
+</html>
